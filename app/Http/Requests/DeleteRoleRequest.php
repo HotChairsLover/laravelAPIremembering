@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreCompanyRequest extends BaseAuthRequest
+class DeleteRoleRequest extends BaseAuthRequest
 {
 
     /**
@@ -15,7 +15,7 @@ class StoreCompanyRequest extends BaseAuthRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string|min:3|max:99'
+            //
         ];
     }
 }

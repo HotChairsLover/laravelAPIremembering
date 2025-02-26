@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\DeleteEmployeeRequest;
 use App\Http\Requests\StoreEmployeeRequest;
 use App\Http\Requests\UpdateEmployeeRequest;
 use App\Http\Resources\EmployeeResource;
@@ -32,7 +33,9 @@ class EmployeeController extends Controller
      */
     public function store(StoreEmployeeRequest $request)
     {
-        //
+        $result = app(StoreEmployeeAction::class)($request->input());
+
+        return new EmployeeShowResource($result);
     }
 
     /**
@@ -48,14 +51,18 @@ class EmployeeController extends Controller
      */
     public function update(UpdateEmployeeRequest $request, Employee $employee)
     {
-        //
+        $result = app(UpdateEmployeeAction::class)($request->input(), $employee);
+
+        return new EmployeeShowResource($result);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Employee $employee)
+    public function destroy(DeleteEmployeeRequest $request, Employee $employee)
     {
-        //
+        $result = $employee->delete();
+
+        return $result;
     }
 }

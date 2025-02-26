@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Auth;
 
-use Illuminate\Foundation\Http\FormRequest;
+use App\Http\Requests\BaseAuthRequest;
 
-class StoreCompanyRequest extends BaseAuthRequest
+class LogoutRequest extends BaseAuthRequest
 {
 
     /**
@@ -15,7 +15,7 @@ class StoreCompanyRequest extends BaseAuthRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string|min:3|max:99'
+            //
         ];
     }
 }

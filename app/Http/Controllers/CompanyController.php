@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\DeleteCompanyRequest;
 use App\Http\Requests\StoreCompanyRequest;
 use App\Http\Requests\UpdateCompanyRequest;
 use App\Http\Resources\CompanyResource;
@@ -33,7 +34,8 @@ class CompanyController extends Controller
      */
     public function store(StoreCompanyRequest $request)
     {
-        //
+        $result = app(StoreCompanyAction::class)($request->input());
+        return new CompanyShowResource($result);
     }
 
     /**
@@ -49,14 +51,16 @@ class CompanyController extends Controller
      */
     public function update(UpdateCompanyRequest $request, Company $company)
     {
-        //
+        $result = app(UpdateCompanyAction::class)($request->input(), $company);
+        return new CompanyShowResource($result);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Company $company)
+    public function destroy(DeleteCompanyRequest $request, Company $company)
     {
-        //
+        $result = $company->delete();
+        return $result;
     }
 }

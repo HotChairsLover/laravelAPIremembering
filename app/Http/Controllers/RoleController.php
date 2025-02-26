@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\DeleteRoleRequest;
 use App\Http\Requests\StoreRoleRequest;
 use App\Http\Requests\UpdateRoleRequest;
 use App\Http\Resources\RoleResource;
@@ -32,7 +33,9 @@ class RoleController extends Controller
      */
     public function store(StoreRoleRequest $request)
     {
-        //
+        $role = app(StoreRoleAction::class)($request->input());
+
+        return new RoleShowResource($role);
     }
 
     /**
@@ -48,14 +51,18 @@ class RoleController extends Controller
      */
     public function update(UpdateRoleRequest $request, Role $role)
     {
-        //
+        $role = app(UpdateRoleAction::class)($request->input(), $role);
+
+        return new RoleShowResource($role);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Role $role)
+    public function destroy(DeleteRoleRequest $request, Role $role)
     {
-        //
+        $result = $role->delete();
+
+        return $result;
     }
 }

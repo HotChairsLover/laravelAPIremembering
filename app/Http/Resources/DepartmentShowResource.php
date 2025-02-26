@@ -18,6 +18,7 @@ class DepartmentShowResource extends JsonResource
             'department_id' => $this->id,
             'department_name' => $this->name,
             'department_director' => $this->director,
+            'department_address' => $this->address,
             'department_company' => new CompanyResource($this->company),
             'department_employees' => EmployeeResource::collection($this->employees),
         ];

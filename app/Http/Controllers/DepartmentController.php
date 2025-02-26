@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\DeleteDepartmentRequest;
 use App\Http\Requests\StoreDepartmentRequest;
 use App\Http\Requests\UpdateDepartmentRequest;
 use App\Http\Resources\DepartmentResource;
@@ -32,7 +33,9 @@ class DepartmentController extends Controller
      */
     public function store(StoreDepartmentRequest $request)
     {
-        //
+        $result = app(StoreDepartmentAction::class)($request->input());
+
+        return new DepartmentShowResource($result);
     }
 
     /**
@@ -48,14 +51,18 @@ class DepartmentController extends Controller
      */
     public function update(UpdateDepartmentRequest $request, Department $department)
     {
-        //
+        $result = app(UpdateDepartmentAction::class)($request->input(), $department);
+
+        return new DepartmentShowResource($result);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Department $department)
+    public function destroy(DeleteDepartmentRequest $request, Department $department)
     {
-        //
+        $result = $department->delete();
+
+        return $result;
     }
 }
