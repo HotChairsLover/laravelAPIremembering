@@ -7,6 +7,7 @@ use App\Http\Requests\StoreCompanyRequest;
 use App\Http\Requests\UpdateCompanyRequest;
 use App\Http\Resources\CompanyResource;
 use App\Http\Resources\CompanyShowResource;
+use App\Jobs\CompanyAfterCreateJob;
 use App\Models\Company;
 use App\Repositories\CompanyRepository;
 
@@ -35,6 +36,7 @@ class CompanyController extends Controller
     public function store(StoreCompanyRequest $request)
     {
         $result = app(StoreCompanyAction::class)($request->input());
+        CompanyAfterCreateJob::dispatch($result);
         return new CompanyShowResource($result);
     }
 
